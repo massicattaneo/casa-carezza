@@ -66,6 +66,11 @@
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
                             <option value="2025">2025</option>
+                            <option value="2025">2026</option>
+                            <option value="2025">2027</option>
+                            <option value="2025">2028</option>
+                            <option value="2025">2029</option>
+                            <option value="2025">2030</option>
                         </select>
                     </div>
                     <div class="col-6 col-12-mobilep">
@@ -90,8 +95,8 @@
         }
 
         function getFirstSaturday(year) {
-            var counter = 0;
-            var firstSaturday = new Date(year + '-01' + counter);
+            var counter = 1;
+            var firstSaturday = new Date(year + '-01-' + counter);
             while (firstSaturday.getDay() !== 6) {
                 firstSaturday = new Date(year + '-01-' + (++counter));
             }
@@ -109,7 +114,8 @@
             (new Array(number).fill(0).forEach(function (zero, index) {
                 weekElement.appendChild(Node('<option value="' + (index + 1) + '">' + (index + 1) + '</option>'));
             }));
-            weekElement.value = week;
+            weekElement.value = week || '1';
+            refreshWeek();
         }
 
         function refreshWeek() {
@@ -123,7 +129,6 @@
         }
 
         refreshYear();
-        refreshWeek();
     </script>
     <!-- Footer -->
     <footer id="footer">
