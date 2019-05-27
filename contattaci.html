@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Residence casa carezza - Contattaci</title>
+		<meta name="keywords" content="multiproprieta',multiproprieta,multiproprietà,time sharing,residence,resort,resorts,carezza,Carezza,CAREZZA,Karensee,karensee,residence casa carezza,Residence Casa Carezza,casacarezza,Casa Carezza,CASA CAREZZA,bolzano,Bolzano,bolzen,Ega,ega,garni casa carezza,Garni Casa Carezza, GARNI CASA CAREZZA,appartamenti in affitto,affitti turistici,affitto,montagna,vacanze,vacanze montagna,rci,RCI,r.c.i,R.C.I.scambio multiproprietà,acquisto multiproprietà,vendere multiproprietà">
+		<meta id="meta-description" name="description" content="Contatta il Residence Casa Carezza - chiedi informazioni o prenota un soggiorno">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+				<h1><a href="index.html">sito ufficiale</a> @Casa Carezza</h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li>
+							<a href="#" class="icon fa-angle-down">Scopri</a>
+							<ul>
+								<li><a href="foto.html">Foto</a></li>
+								<li><a href="contattaci.html">Contattaci</a></li>
+								<li><a href="area_proprietari.html">Area Proprietari</a></li>
+								<li>
+									<a href="#">Link esterni</a>
+									<ul>
+										<li><a target="_blank" href="https://carezza.it">Lago Carezza</a></li>
+										<li><a target="_blank" href="https://eggental.com/it">I dintorni</a></li>
+										<li><a target="_blank" href="https://www.trentino.com/">Trentino</a></li>
+										<li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<!--<li><a href="#" class="button">Sign Up</a></li>-->
+					</ul>
+				</nav>
+			</header>
+
+			<!-- Main -->
+				<section id="main" class="container medium">
+					<header>
+						<h2>Contattaci</h2>
+						<p>Per vendere, acquistare, affittare,
+							contattateci compilando il seguente modulo.</p>
+					</header>
+					<div class="box">
+						<form method="post" action="#" name="modulo">
+							<div class="row gtr-50 gtr-uniform">
+								<div class="col-6 col-12-mobilep">
+									<input type="text" name="nome" id="name" value="" placeholder="Nome" />
+								</div>
+								<div class="col-6 col-12-mobilep">
+									<input type="email" name="email" id="email" value="" placeholder="Email" />
+								</div>
+								<div class="col-12">
+									<input type="text" name="subject" id="subject" value="" placeholder="Oggetto" />
+								</div>
+								<div class="col-12">
+									<textarea name="message" id="message" placeholder="Il tuo messaggio" rows="6"></textarea>
+								</div>
+								<div class="col-12">
+									<ul class="actions special">
+										<li><input type="button" value="Invia messaggio" onClick="Email()" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+
+			<script>
+                function Email() {
+
+                    var nome = document.modulo.nome.value;
+                    var indirizzo = document.modulo.email.value;
+                    var messaggio = document.modulo.message.value;
+                    var subject = document.modulo.subject.value;
+
+					if ((nome == "") || (nome == "undefined")) {
+                        alert("Inserire Nome.");
+                        document.modulo.nome.focus();
+                    }
+                    else if (subject == "") {
+                        alert("Inserire l'oggetto.");
+                        document.modulo.subject.focus();
+					}
+                    else if ((indirizzo.indexOf("@") == (-1)) || (indirizzo == "") || (indirizzo == "undefined")) {
+                        alert("Inserire un indirizzo email valido.");
+                        document.modulo.indirizzo.focus();
+                    }
+                    else if ((messaggio == "") || (messaggio == "undefined")) {
+                        alert("Inserire un messaggio.");
+                        document.modulo.messaggio.focus();
+                    }
+                    else {
+                        location.href = "mailto:" + "vacanze" + "@" + "casacarezza" + ".it" + "?Subject="+ subject + "&Body=MITTENTE: " + nome + "%0A%0A" +  "EMAIL: " + indirizzo + "%0A%0A" + "MESSAGGIO: " + messaggio;
+                    }
+                }
+                //-->
+			</script>
+			<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->
+					<li><a target="_blank" href="https://www.facebook.com/www.casacarezza.it/?fref=ts" class="icon fa-facebook"><span
+							class="label">Facebook</span></a></li>
+					<!--<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>-->
+					<!--<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>-->
+					<!--<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>-->
+					<!--<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>-->
+				</ul>
+				<ul class="copyright">
+					<li>&copy; Casa Carezza.</li>
+					<!--<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>-->
+				</ul>
+			</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
