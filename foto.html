@@ -7,8 +7,10 @@
 <html>
 <head>
     <title>Residence casa carezza - Foto</title>
-    <meta name="keywords" content="multiproprieta',multiproprieta,multiproprietà,time sharing,residence,resort,resorts,carezza,Carezza,CAREZZA,Karensee,karensee,residence casa carezza,Residence Casa Carezza,casacarezza,Casa Carezza,CASA CAREZZA,bolzano,Bolzano,bolzen,Ega,ega,garni casa carezza,Garni Casa Carezza, GARNI CASA CAREZZA,appartamenti in affitto,affitti turistici,affitto,montagna,vacanze,vacanze montagna,rci,RCI,r.c.i,R.C.I.scambio multiproprietà,acquisto multiproprietà,vendere multiproprietà">
-    <meta id="meta-description" name="description" content="Gurda le foto del Residence Casa Carezza - Nova Levante (BZ) - Italia.">
+    <meta name="keywords"
+          content="multiproprieta',multiproprieta,multiproprietà,time sharing,residence,resort,resorts,carezza,Carezza,CAREZZA,Karensee,karensee,residence casa carezza,Residence Casa Carezza,casacarezza,Casa Carezza,CASA CAREZZA,bolzano,Bolzano,bolzen,Ega,ega,garni casa carezza,Garni Casa Carezza, GARNI CASA CAREZZA,appartamenti in affitto,affitti turistici,affitto,montagna,vacanze,vacanze montagna,rci,RCI,r.c.i,R.C.I.scambio multiproprietà,acquisto multiproprietà,vendere multiproprietà">
+    <meta id="meta-description" name="description"
+          content="Gurda le foto del Residence Casa Carezza - Nova Levante (BZ) - Italia.">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
@@ -36,7 +38,8 @@
                                 <li><a target="_blank" href="https://carezza.it">Lago Carezza</a></li>
                                 <li><a target="_blank" href="https://eggental.com/it">I dintorni</a></li>
                                 <li><a target="_blank" href="https://www.trentino.com/">Trentino</a></li>
-                                <li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a></li>
+                                <li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -58,14 +61,15 @@
     </section>
     <script>
         function Node(markup) {
-            const div = document.createElement('div');
+            var div = document.createElement('div');
             div.innerHTML = markup;
             return div.children[0];
         }
 
         var elementById = document.getElementById('lightgallery');
         (new Array(45).fill(0).forEach(function (zero, index) {
-            elementById.appendChild(Node(`<a href="gallery/image${index + 1}.jpg"><img src="thumbnails/image${index + 1}.jpg" width="100px"></a>`));
+            var markup = '<a href="gallery/image' + (index + 1) + '.jpg"><img src="thumbnails/image' + (index + 1) + '.jpg" width="100px"></a>';
+            elementById.appendChild(Node(markup));
         }));
         lightGallery(elementById, {
             thumbnail: true,
