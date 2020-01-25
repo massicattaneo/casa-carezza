@@ -130,7 +130,7 @@
 
     function login(email) {
         var actionCodeSettings = {
-            url: 'http://localhost:8080/area_privata.html',
+            url: 'http://localhost:8080/area_proprietari.html',
             handleCodeInApp: true
         };
         firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
@@ -158,13 +158,17 @@
             .then(function (result) {
                 window.localStorage.removeItem('emailForSignIn');
                 document.forms['login-in'].style.display = 'none';
-                document.forms['logged'].style.display = 'block';
+                showLoggedInfo();
             })
             .catch(function (error) {
                 document.forms['login'].style.display = 'block';
                 document.forms['login-in'].style.display = 'none';
             });
     } else {
+        document.forms['login'].style.display = 'block';
+    }
+
+    function showLoggedInfo() {
         getDatabase().then(function (db) {
             database = db;
             var email = 'massi.cattaneo.it@gmail.com';

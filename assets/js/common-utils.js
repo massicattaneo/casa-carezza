@@ -13,9 +13,14 @@ function getFirstSaturday(year) {
     return firstSaturday;
 }
 
-function getWeekDatesString(year, week) {
+function getFromWeekDate(year, week) {
     var firstSaturday = getFirstSaturday(year);
     var from = new Date(firstSaturday.getTime() + ((week - 1) * 7 * 24 * 60 * 60 * 1000));
+    return from;
+}
+
+function getWeekDatesString(year, week) {
+    var from = getFromWeekDate(year, week);
     var to = new Date(from.getTime() + 7 * 24 * 60 * 60 * 1000);
     return '<strong>Dal ' + from.toLocaleDateString() + ' al ' + to.toLocaleDateString() + '</strong>';
 }

@@ -118,6 +118,9 @@
             .filter(function (item) {
                 return item.type === type;
             })
+            .filter(function (item) {
+                return Date.now() > getFromWeekDate(item.year, item.week).getTime();
+            })
             .sort(function (a, b) {
                 return a.year - b.year === 0 ? a.week - b.week : a.year - b.year;
             })
