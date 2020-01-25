@@ -1,0 +1,22 @@
+{
+  "name": "casa-carezza",
+  "version": "1.0.0",
+  "description": "casa carezza dolomiti resort",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/massicattaneo/casa-carezza.git"
+  },
+  "author": "mcattaneo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/massicattaneo/casa-carezza/issues"
+  },
+  "homepage": "https://github.com/massicattaneo/casa-carezza#readme",
+  "dependencies": {
+    "http-serve": "^1.0.1"
+  }
+}

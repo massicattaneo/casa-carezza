@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<!--
+	Alpha by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Residence casa carezza - Contattaci</title>
+    <meta name="keywords"
+          content="multiproprieta',multiproprieta,multiproprietà,time sharing,residence,resort,resorts,carezza,Carezza,CAREZZA,Karensee,karensee,residence casa carezza,Residence Casa Carezza,casacarezza,Casa Carezza,CASA CAREZZA,bolzano,Bolzano,bolzen,Ega,ega,garni casa carezza,Garni Casa Carezza, GARNI CASA CAREZZA,appartamenti in affitto,affitti turistici,affitto,montagna,vacanze,vacanze montagna,rci,RCI,r.c.i,R.C.I.scambio multiproprietà,acquisto multiproprietà,vendere multiproprietà">
+    <meta id="meta-description" name="description"
+          content="Contatta il Residence Casa Carezza - chiedi informazioni o prenota un soggiorno">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+</head>
+<body class="is-preload">
+<div id="page-wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="index.html">sito ufficiale</a> @Casa Carezza</h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="prenota.html">Prenota</a></li>
+                <li><a href="foto.html">Foto</a></li>
+                <li><a href="contattaci.html">Contattaci</a></li>
+                <li><a href="area_proprietari.html">Area Proprietari</a></li>
+                <li>
+                    <a href="#" class="icon fa-angle-down">Scopri</a>
+                    <ul>
+                        <li><a target="_blank" href="https://carezza.it">Lago Carezza</a></li>
+                        <li><a target="_blank" href="https://eggental.com/it">I dintorni</a></li>
+                        <li><a target="_blank" href="https://www.trentino.com/">Trentino</a></li>
+                        <li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a></li>
+                    </ul>
+                </li>
+                <!--<li><a href="#" class="button">Sign Up</a></li>-->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <section id="main" class="container medium">
+        <header>
+            <h2>Prenota</h2>
+            <p>Le occasioni in evidenza!</p>
+        </header>
+        <form name="filter">
+            <label for="filter_type">TIPO OFFERTA:</label>
+            <select name="type" id="filter_type" onchange="update()">
+                <option value="rent">AFFITTO</option>
+                <option value="exchange">SCAMBIO</option>
+            </select>
+        </form>
+        <div id="list"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="icons">
+            <!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->
+            <li><a target="_blank" href="https://www.facebook.com/www.casacarezza.it/?fref=ts" class="icon fa-facebook"><span
+                    class="label">Facebook</span></a></li>
+            <!--<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>-->
+            <!--<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>-->
+            <!--<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>-->
+            <!--<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>-->
+        </ul>
+        <ul class="copyright">
+            <li>&copy; Casa Carezza.</li>
+            <!--<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>-->
+        </ul>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+<script src="assets/js/init-firebase.js"></script>
+<script src="assets/js/database-utils.js"></script>
+<script src="assets/js/common-utils.js"></script>
+
+<script>
+    let weeks;
+    function update() {
+        if (!weeks) return;
+        var type = document.forms.filter.type.value;
+        var map = weeks
+            .reduce(function (acc, week) {
+                var rents = (week.rent || []).map(function (i) {
+                    i.type = 'rent';
+                    i.week = week.number;
+                    return i;
+                });
+                var exchanges = (week.exchange || []).map(function (i) {
+                    i.type = 'exchange';
+                    i.week = week.number;
+                    return i;
+                });
+                return acc.concat(rents).concat(exchanges);
+            }, [])
+            .filter(function (item) {
+                return !item.reserved;
+            })
+            .filter(function (item) {
+                return item.type === type;
+            })
+            .sort(function (a, b) {
+                return a.year - b.year === 0 ? a.week - b.week : a.year - b.year;
+            })
+            .map(function (item) {
+                return '<table class="box">' +
+                    '<tr><td>APPARTAMENTO N.:</td><td>' + item.flat + '</td></tr>' +
+                    '<tr><td>OFFERTA:</td><td>' + (item.type === 'rent' ? 'AFFITTO' : 'SCAMBIO (solo per proprietari)') + '</td></tr>' +
+                    '<tr><td>SETTIMANA:</td><td>' + getWeekDatesString(item.year, item.week) + '</td></tr>' +
+                    '<tr><td>CHIAMACI:</td><td><a style="border-bottom: none;" href="tel:+39 0471-61.20.95">+39 0471-61.20.95</a></td></tr>' +
+                    '</table>';
+            });
+
+        document.getElementById('list').innerHTML = map.length ? map.join('<hr/>') : 'NESSUNA OCCASIONE AL MOMENTO ...'
+    }
+
+
+    firebase.database().ref('weeks/').on('value', function (snapshot) {
+        var w = JSON.parse(JSON.stringify(snapshot.val()));
+        weeks = w;
+        update();
+    });
+</script>
+</body>
+</html>

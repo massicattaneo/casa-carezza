@@ -26,22 +26,17 @@
         <nav id="nav">
             <ul>
                 <li><a href="index.html">Home</a></li>
+                <li><a href="prenota.html">Prenota</a></li>
+                <li><a href="foto.html">Foto</a></li>
+                <li><a href="contattaci.html">Contattaci</a></li>
+                <li><a href="area_proprietari.html">Area Proprietari</a></li>
                 <li>
                     <a href="#" class="icon fa-angle-down">Scopri</a>
                     <ul>
-                        <li><a href="foto.html">Foto</a></li>
-                        <li><a href="contattaci.html">Contattaci</a></li>
-                        <li><a href="area_proprietari.html">Area Proprietari</a></li>
-                        <li>
-                            <a href="#">Link esterni</a>
-                            <ul>
-                                <li><a target="_blank" href="https://carezza.it">Lago Carezza</a></li>
-                                <li><a target="_blank" href="https://eggental.com/it">I dintorni</a></li>
-                                <li><a target="_blank" href="https://www.trentino.com/">Trentino</a></li>
-                                <li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <li><a target="_blank" href="https://carezza.it">Lago Carezza</a></li>
+                        <li><a target="_blank" href="https://eggental.com/it">I dintorni</a></li>
+                        <li><a target="_blank" href="https://www.trentino.com/">Trentino</a></li>
+                        <li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a></li>
                     </ul>
                 </li>
                 <!--<li><a href="#" class="button">Sign Up</a></li>-->
@@ -67,7 +62,7 @@
         }
 
         var elementById = document.getElementById('lightgallery');
-        (new Array(45).fill(0).forEach(function (zero, index) {
+        (new Array(88).fill(0).forEach(function (zero, index) {
             var markup = '<a href="gallery/image' + (index + 1) + '.jpg"><img src="thumbnails/image' + (index + 1) + '.jpg" width="100px"></a>';
             elementById.appendChild(Node(markup));
         }));

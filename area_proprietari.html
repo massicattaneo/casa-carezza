@@ -24,22 +24,17 @@
         <nav id="nav">
             <ul>
                 <li><a href="index.html">Home</a></li>
+                <li><a href="prenota.html">Prenota</a></li>
+                <li><a href="foto.html">Foto</a></li>
+                <li><a href="contattaci.html">Contattaci</a></li>
+                <li><a href="area_proprietari.html">Area Proprietari</a></li>
                 <li>
                     <a href="#" class="icon fa-angle-down">Scopri</a>
                     <ul>
-                        <li><a href="foto.html">Foto</a></li>
-                        <li><a href="contattaci.html">Contattaci</a></li>
-                        <li><a href="area_proprietari.html">Area Proprietari</a></li>
-                        <li>
-                            <a href="#">Link esterni</a>
-                            <ul>
-                                <li><a target="_blank" href="https://carezza.it">Lago Carezza</a></li>
-                                <li><a target="_blank" href="https://eggental.com/it">I dintorni</a></li>
-                                <li><a target="_blank" href="https://www.trentino.com/">Trentino</a></li>
-                                <li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <li><a target="_blank" href="https://carezza.it">Lago Carezza</a></li>
+                        <li><a target="_blank" href="https://eggental.com/it">I dintorni</a></li>
+                        <li><a target="_blank" href="https://www.trentino.com/">Trentino</a></li>
+                        <li><a target="_blank" href="https://www.dolomitisuperski.com/it">Dolomiti SuperSki</a></li>
                     </ul>
                 </li>
                 <!--<li><a href="#" class="button">Sign Up</a></li>-->
@@ -50,16 +45,30 @@
     <!-- Main -->
     <section id="main" class="container medium">
         <header>
-            <h2>Area Proprietari</h2>
-            <p>Cerca la tua settimana:</p>
+            <h2>Area Privata</h2>
         </header>
         <div class="box">
-            <form method="post" action="#" name="modulo">
+            <form name="login-in" style="display: none; text-align: center;">ENTRANDO NELLA TUA AREA PRIVATA</form>
+            <form name="login" style="display: none;">
+                <div class="row gtr-50 gtr-uniform">
+                    <div class="col-6 col-12-mobilep">
+                        <label>EMAIL:</label>
+                        <input type="email" required name="email"/>
+                    </div>
+                    <div class="col-6 col-12-mobilep">
+                        <label>&nbsp;</label>
+                        <input type="submit" value="ENTRA"/>
+                    </div>
+                    <div id="result" style="text-align: center; width: 100%;">
+
+                    </div>
+                </div>
+            </form>
+            <form name="logged" style="display: none;">
                 <div class="row gtr-50 gtr-uniform">
                     <div class="col-6 col-12-mobilep">
                         <label>ANNO:</label>
-                        <select name="year" onchange="refreshYear()">
-                            <option value="2019">2019</option>
+                        <select name="year">
                             <option value="2020">2020</option>
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
@@ -73,63 +82,13 @@
                             <option value="2025">2030</option>
                         </select>
                     </div>
-                    <div class="col-6 col-12-mobilep">
-                        <label>SETTIMANA:</label>
-                        <select name="week" onchange="refreshWeek()">
-
-                        </select>
-                    </div>
-                    <div id="result" style="text-align: center; width: 100%;">
+                    <div id="logged-result" style="width: 100%;">
 
                     </div>
                 </div>
             </form>
         </div>
     </section>
-
-    <script>
-        function Node(markup) {
-            var div = document.createElement('div');
-            div.innerHTML = markup;
-            return div.children[0];
-        }
-
-        function getFirstSaturday(year) {
-            var counter = 1;
-            var firstSaturday = new Date(year + '-01-' + counter);
-            while (firstSaturday.getDay() !== 6) {
-                firstSaturday = new Date(year + '-01-' + (++counter));
-            }
-            return firstSaturday;
-        }
-
-        function refreshYear() {
-            var week = document.modulo.week.value;
-            var year = document.modulo.year.value;
-            document.getElementsByName('week')[0].innerHTML = '';
-            var firstSaturday = getFirstSaturday(year);
-            var last = new Date(firstSaturday.getTime() + ((52) * 7 * 24 * 60 * 60 * 1000));
-            var number = last.getFullYear() === firstSaturday.getFullYear() ? 53 : 52;
-            var weekElement = document.getElementsByName('week')[0];
-            (new Array(number).fill(0).forEach(function (zero, index) {
-                weekElement.appendChild(Node('<option value="' + (index + 1) + '">' + (index + 1) + '</option>'));
-            }));
-            weekElement.value = week || '1';
-            refreshWeek();
-        }
-
-        function refreshWeek() {
-            var year = document.modulo.year.value;
-            var week = document.modulo.week.value;
-            var firstSaturday = getFirstSaturday(year);
-            var result = document.getElementById('result');
-            var from = new Date(firstSaturday.getTime() + ((week - 1) * 7 * 24 * 60 * 60 * 1000));
-            var to = new Date(from.getTime() + 7 * 24 * 60 * 60 * 1000);
-            result.innerHTML = 'ANNO ' + year + ' - SETTIMANA ' + week + ': <br/> <strong>Dal ' + from.toLocaleDateString() + ' al ' + to.toLocaleDateString() + '</strong>';
-        }
-
-        refreshYear();
-    </script>
     <!-- Footer -->
     <footer id="footer">
         <ul class="icons">
@@ -158,5 +117,136 @@
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
 
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+<script src="assets/js/init-firebase.js"></script>
+<script src="assets/js/database-utils.js"></script>
+<script src="assets/js/common-utils.js"></script>
+
+<script>
+    var database;
+
+    function login(email) {
+        var actionCodeSettings = {
+            url: 'http://localhost:8080/area_privata.html',
+            handleCodeInApp: true
+        };
+        firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+            .then(function () {
+                window.localStorage.setItem('emailForSignIn', email);
+                alert('Controlla la tua mail per entrare nell \' area privata');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    document.forms['login'].addEventListener('submit', function (event) {
+        event.preventDefault();
+        login(document.forms['login']['email'].value);
+    });
+
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+        document.forms['login-in'].style.display = 'block';
+        var email = window.localStorage.getItem('emailForSignIn');
+        if (!email) {
+            email = window.prompt('Please provide your email for confirmation');
+        }
+        firebase.auth().signInWithEmailLink(email, window.location.href)
+            .then(function (result) {
+                window.localStorage.removeItem('emailForSignIn');
+                document.forms['login-in'].style.display = 'none';
+                document.forms['logged'].style.display = 'block';
+            })
+            .catch(function (error) {
+                document.forms['login'].style.display = 'block';
+                document.forms['login-in'].style.display = 'none';
+            });
+    } else {
+        getDatabase().then(function (db) {
+            database = db;
+            var email = 'massi.cattaneo.it@gmail.com';
+            var user = db.users.find(function (item) {
+                return item.emails.indexOf(email) !== -1;
+            });
+            var weeks = JSON.parse(JSON.stringify(db.weeks));
+
+            var toDraw = user.properties.reduce(function (acc, prop) {
+                var flat = prop.flat;
+                var periodNum = prop.period;
+                var period = db.periods.find(function (item) {
+                    return item.number === periodNum;
+                });
+                return acc.concat(weeks.filter(function (item) {
+                    return period.weeks.indexOf(item.number) !== -1;
+                })).map(function (item) {
+                    item.flat = flat;
+                    item.period = periodNum;
+                    return item;
+                });
+            }, []);
+
+
+            function changeYear() {
+                document.getElementById('logged-result').innerHTML = toDraw
+                    .map(function (weekItem, index, array) {
+                        var previous = array[index - 1] || {};
+                        var flat = weekItem.flat;
+                        var week = weekItem.number;
+                        var year = Number(document.logged.year.value);
+                        var findRent = weekItem.rent.find(function (i) {
+                            return i.year === year;
+                        }) || {};
+                        var findExchange = weekItem.exchange.find(function (i) {
+                            return i.year === year;
+                        }) || {};
+                        var flatPeriod = !(previous.period === weekItem.period && previous.flat === flat)
+                            ? '<h3>APPARTEMENTO: ' + flat + ' - PERIODO: ' + weekItem.period + '</h3>'
+                            : '';
+                        var reservedFor = findRent.reserved ? 'RISERVATO PER AFFITTO' : (findExchange.reserved ? 'RISERVATO PER SCAMBIO' : '');
+                        var label = '<span>' + getWeekDates(year, week) + '</span>';
+                        var rent = '<input ' + (findRent.year ? 'checked' : '') + ' id="rent_' + week + '" type="checkbox" onchange="rent(' + year + ',' + week + ',' + flat + ')"/><label for="rent_' + week + '">AFFITTO</label>';
+                        var exchange = '<input ' + (findExchange.year ? 'checked' : '') + ' id="exchange_' + week + '" type="checkbox" onchange="exchange(' + year + ',' + week + ',' + flat + ')"/><label for="exchange_' + week + '">SCAMBIO</label>';
+                        return flatPeriod + label + '<br/>' + (reservedFor ? reservedFor + '<br/>' : rent + exchange);
+                    }).join('<br/>');
+            }
+
+            document.forms['logged']['year'].addEventListener('change', changeYear);
+            document.forms['logged'].style.display = 'block';
+            changeYear();
+        });
+    }
+
+    function rent(year, week, flat) {
+        updateWeek(year, week, flat, 'rent');
+    }
+
+    function exchange(year, week, flat) {
+        updateWeek(year, week, flat, 'exchange');
+    }
+
+    function updateWeek(year, week, flat, type) {
+        var updates = {};
+        var checked = document.forms['logged'][type + '_' + week].checked;
+        var weekItem = database.weeks.find(function (item) {
+            return item.number === Number(week);
+        });
+        if (checked) {
+            weekItem[type].push({ year: year, reserved: false, flat: flat });
+        } else {
+            var item = weekItem[type].find(function (i) {
+                return i.year === year && i.flat === flat;
+            });
+            var index = weekItem[type].indexOf(item);
+            weekItem[type].splice(index, 1);
+        }
+        var item = JSON.parse(JSON.stringify(weekItem));
+        delete item.key;
+        updates['/weeks/' + weekItem.key] = item;
+        return firebase.database().ref().update(updates);
+    }
+</script>
 </body>
 </html>
