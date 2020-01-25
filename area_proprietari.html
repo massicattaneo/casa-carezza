@@ -45,15 +45,19 @@
     <!-- Main -->
     <section id="main" class="container medium">
         <header>
-            <h2>Area Privata</h2>
+            <h2>Area Proprietari</h2>
         </header>
         <div class="box">
             <form name="login-in" style="display: none; text-align: center;">ENTRANDO NELLA TUA AREA PRIVATA</form>
-            <form name="login" style="display: none;">
+            <form name="login-casa-carezza" style="display: none;">
                 <div class="row gtr-50 gtr-uniform">
                     <div class="col-6 col-12-mobilep">
-                        <label>EMAIL:</label>
+                        <label>EMAIL: <a href="#" onclick="sendPassword()">cambia password</a></label>
                         <input type="email" required name="email"/>
+                    </div>
+                    <div class="col-6 col-12-mobilep">
+                        <label>PASSWORD:</label>
+                        <input type="password" required name="password"/>
                     </div>
                     <div class="col-6 col-12-mobilep">
                         <label>&nbsp;</label>
@@ -127,51 +131,42 @@
 
 <script>
     var database;
+    document.forms['login-casa-carezza'].style.display = 'block';
 
-    function login(email) {
-        var actionCodeSettings = {
-            url: 'http://localhost:8080/area_proprietari.html',
-            handleCodeInApp: true
-        };
-        firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-            .then(function () {
-                window.localStorage.setItem('emailForSignIn', email);
-                alert('Controlla la tua mail per entrare nell \' area privata');
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    function sendPassword() {
+        firebase.auth().sendPasswordResetEmail(document.forms['login-casa-carezza']['email'].value).then(function () {
+            alert('CONTROLLA LA TUA MAIL PER CAMBIARE LA PASSWORD');
+        }).catch(function () {
+            alert('QUESTA EMAIL NON CORRISPONDE A NESSUN USARIO');
+        })
     }
 
-    document.forms['login'].addEventListener('submit', function (event) {
+    function login(email, password) {
+        document.forms['login-in'].style.display = 'block';
+        document.forms['login-casa-carezza'].style.display = 'none';
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function () {
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(function () {
+                    window.localStorage.removeItem('emailForSignIn');
+                    document.forms['login-in'].style.display = 'none';
+                    showLoggedInfo(email);
+                })
+                .catch(function (error) {
+                    document.forms['login-casa-carezza'].style.display = 'block';
+                    document.forms['login-in'].style.display = 'none';
+                });
+        })
+
+    }
+
+    document.forms['login-casa-carezza'].addEventListener('submit', function (event) {
         event.preventDefault();
-        login(document.forms['login']['email'].value);
+        login(document.forms['login-casa-carezza']['email'].value, document.forms['login-casa-carezza']['password'].value);
     });
 
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-        document.forms['login-in'].style.display = 'block';
-        var email = window.localStorage.getItem('emailForSignIn');
-        if (!email) {
-            email = window.prompt('Please provide your email for confirmation');
-        }
-        firebase.auth().signInWithEmailLink(email, window.location.href)
-            .then(function (result) {
-                window.localStorage.removeItem('emailForSignIn');
-                document.forms['login-in'].style.display = 'none';
-                showLoggedInfo();
-            })
-            .catch(function (error) {
-                document.forms['login'].style.display = 'block';
-                document.forms['login-in'].style.display = 'none';
-            });
-    } else {
-        document.forms['login'].style.display = 'block';
-    }
-
-    function showLoggedInfo() {
+    function showLoggedInfo(email) {
         getDatabase().then(function (db) {
             database = db;
-            var email = 'massi.cattaneo.it@gmail.com';
             var user = db.users.find(function (item) {
                 return item.emails.indexOf(email) !== -1;
             });
