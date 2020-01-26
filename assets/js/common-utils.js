@@ -26,7 +26,11 @@ function getWeekDatesString(year, week) {
 }
 
 function getWeekDates(year, week) {
-    return 'ANNO ' + year + ' - SETTIMANA ' + week + 'a:<br/>' + getWeekDatesString(year, week);
+    return ' ANNO ' + year + ' - SETTIMANA ' + week + 'a:<br/>' + getWeekDatesString(year, week);
+}
+
+function cloneObject(item) {
+    return JSON.parse(JSON.stringify(item));
 }
 
 

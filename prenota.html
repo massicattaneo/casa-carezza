@@ -95,6 +95,7 @@
 
 <script>
     let weeks;
+
     function update() {
         if (!weeks) return;
         var type = document.forms.filter.type.value;
@@ -119,23 +120,35 @@
                 return item.type === type;
             })
             .filter(function (item) {
-                return Date.now() > getFromWeekDate(item.year, item.week).getTime();
+                return Date.now() < getFromWeekDate(item.year, item.week).getTime();
             })
             .sort(function (a, b) {
                 return a.year - b.year === 0 ? a.week - b.week : a.year - b.year;
             })
+            .reduce(function (acc, item) {
+                // {flat: 13, reserved: false, year: 2020, type: "rent", week: 11}
+                let sameWeekItem = acc.find(function (i) {
+                    return i.week === item.week;
+                });
+                if (sameWeekItem) {
+                    sameWeekItem.flat = sameWeekItem.flat + ', ' + item.flat;
+                    return acc;
+                }
+                return acc.concat(item);
+            }, [])
             .map(function (item) {
                 return '<table class="box">' +
-                    '<tr><td>APPARTAMENTO N.:</td><td>' + item.flat + '</td></tr>' +
+                    '<tr><td>APPARTAMENTO/I N.:</td><td>' + item.flat + '</td></tr>' +
                     '<tr><td>OFFERTA:</td><td>' + (item.type === 'rent' ? 'AFFITTO' : 'SCAMBIO (solo per proprietari)') + '</td></tr>' +
-                    '<tr><td>SETTIMANA:</td><td>' + getWeekDatesString(item.year, item.week) + '</td></tr>' +
+                    '<tr style="background: #f3ffef;"><td>SETTIMANA:</td><td>' + getWeekDatesString(item.year, item.week) + '</td></tr>' +
                     '<tr><td>CHIAMACI:</td><td><a style="border-bottom: none;" href="tel:+39 0471-61.20.95">+39 0471-61.20.95</a></td></tr>' +
                     '</table>';
             });
 
-        document.getElementById('list').innerHTML = map.length ? map.join('<hr/>') : 'NESSUNA OCCASIONE AL MOMENTO ...'
+        document.getElementById('list').innerHTML = map.length ? map.join('<hr/>') : 'NESSUNA OCCASIONE AL MOMENTO ...';
     }
 
+    document.getElementById('list').innerHTML = 'CERCANDO OCCASIONI ...';
 
     firebase.database().ref('weeks/').on('value', function (snapshot) {
         var w = JSON.parse(JSON.stringify(snapshot.val()));

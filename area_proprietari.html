@@ -138,7 +138,7 @@
             alert('CONTROLLA LA TUA MAIL PER CAMBIARE LA PASSWORD');
         }).catch(function () {
             alert('QUESTA EMAIL NON CORRISPONDE A NESSUN USARIO');
-        })
+        });
     }
 
     function login(email, password) {
@@ -155,7 +155,7 @@
                     document.forms['login-casa-carezza'].style.display = 'block';
                     document.forms['login-in'].style.display = 'none';
                 });
-        })
+        });
 
     }
 
@@ -170,7 +170,7 @@
             var user = db.users.find(function (item) {
                 return item.emails.indexOf(email) !== -1;
             });
-            var weeks = JSON.parse(JSON.stringify(db.weeks));
+            var weeks = cloneObject(db.weeks);
 
             var toDraw = user.properties.reduce(function (acc, prop) {
                 var flat = prop.flat;
@@ -178,15 +178,15 @@
                 var period = db.periods.find(function (item) {
                     return item.number === periodNum;
                 });
-                return acc.concat(weeks.filter(function (item) {
+                const items = weeks.filter(function (item) {
                     return period.weeks.indexOf(item.number) !== -1;
-                })).map(function (item) {
+                }).map(cloneObject);
+                items.forEach(function (item) {
                     item.flat = flat;
                     item.period = periodNum;
-                    return item;
                 });
+                return acc.concat(items);
             }, []);
-
 
             function changeYear() {
                 document.getElementById('logged-result').innerHTML = toDraw
@@ -196,18 +196,18 @@
                         var week = weekItem.number;
                         var year = Number(document.logged.year.value);
                         var findRent = weekItem.rent.find(function (i) {
-                            return i.year === year;
+                            return i.year === year && i.flat === flat;
                         }) || {};
                         var findExchange = weekItem.exchange.find(function (i) {
-                            return i.year === year;
+                            return i.year === year && i.flat === flat;
                         }) || {};
                         var flatPeriod = !(previous.period === weekItem.period && previous.flat === flat)
-                            ? '<h3>APPARTEMENTO: ' + flat + ' - PERIODO: ' + weekItem.period + '</h3>'
+                            ? '<h4>APPARTEMENTO: ' + flat + ' - PERIODO: ' + weekItem.period + '</h4>'
                             : '';
                         var reservedFor = findRent.reserved ? 'RISERVATO PER AFFITTO' : (findExchange.reserved ? 'RISERVATO PER SCAMBIO' : '');
                         var label = '<span>' + getWeekDates(year, week) + '</span>';
-                        var rent = '<input ' + (findRent.year ? 'checked' : '') + ' id="rent_' + week + '" type="checkbox" onchange="rent(' + year + ',' + week + ',' + flat + ')"/><label for="rent_' + week + '">AFFITTO</label>';
-                        var exchange = '<input ' + (findExchange.year ? 'checked' : '') + ' id="exchange_' + week + '" type="checkbox" onchange="exchange(' + year + ',' + week + ',' + flat + ')"/><label for="exchange_' + week + '">SCAMBIO</label>';
+                        var rent = '<input ' + (findRent.year ? 'checked' : '') + ' id="rent_' + week + flat + '" type="checkbox" onchange="rent(' + year + ',' + week + ',' + flat + ')"/><label for="rent_' + week + flat + '">AFFITTO</label>';
+                        var exchange = '<input ' + (findExchange.year ? 'checked' : '') + ' id="exchange_' + week + flat + '" type="checkbox" onchange="exchange(' + year + ',' + week + ',' + flat + ')"/><label for="exchange_' + week + flat + '">SCAMBIO</label>';
                         return flatPeriod + label + '<br/>' + (reservedFor ? reservedFor + '<br/>' : rent + exchange);
                     }).join('<br/>');
             }
@@ -228,7 +228,7 @@
 
     function updateWeek(year, week, flat, type) {
         var updates = {};
-        var checked = document.forms['logged'][type + '_' + week].checked;
+        var checked = document.forms['logged'][type + '_' + week + flat].checked;
         var weekItem = database.weeks.find(function (item) {
             return item.number === Number(week);
         });
@@ -241,7 +241,7 @@
             var index = weekItem[type].indexOf(item);
             weekItem[type].splice(index, 1);
         }
-        var item = JSON.parse(JSON.stringify(weekItem));
+        var item = cloneObject(weekItem);
         delete item.key;
         updates['/weeks/' + weekItem.key] = item;
         return firebase.database().ref().update(updates);
