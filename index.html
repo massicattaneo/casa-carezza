@@ -12,6 +12,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/lightgallery/css/lightgallery.min.css"/>
+    <script src="assets/lightgallery/js/lightgallery.min.js"></script>
 </head>
 <body class="landing is-preload">
 <div id="page-wrapper">
@@ -24,6 +26,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="prenota.html">Prenota</a></li>
                 <li><a href="foto.html">Foto</a></li>
+                <li><a href="cerca_periodo.html">Cerca periodo</a></li>
                 <li><a href="contattaci.html">Contattaci</a></li>
                 <li><a href="area_proprietari.html">Area Proprietari</a></li>
                 <li>
@@ -55,7 +58,7 @@
 
         <section class="box special">
             <header class="major">
-                <h2>Un residence con 1 Mono / 16 Bilocali
+                <h2>Un residence con 17 appartamenti
                     <br/>
                     nel cuore delle dolomiti
                 </h2>
@@ -76,8 +79,8 @@
                     <h3>Chiamaci</h3>
                     <p>
                         Reception Tel. <a href="tel:+39 0471-61.20.95">+39 0471-61.20.95</a><br/>
-                        Orari apertura <strong>8.00 - 10.30 | 16.00 - 19.00</strong><br/>
-                        Sabato <strong>8.00 - 10.00 | 16.00 - 20.00</strong><br/>
+                        Orari apertura <strong>8.30 - 10.30 | 16.00 - 19.00</strong><br/>
+                        Sabato <strong>8.30 - 10.00 | 16.00 - 20.00</strong><br/>
                         Email: <a href="mailto:gestore@casacarezza.it">gestore@casacarezza.it</a><br/>
                         <strong>Il Residence è chiuso nei mesi di Maggio e Novembre.</strong>
                     </p>
@@ -124,6 +127,7 @@
                     <!--<ul class="actions special">-->
                         <!--<li><a href="#" class="button alt">Learn More</a></li>-->
                     <!--</ul>-->
+                    <div id="lightgallery1" style="text-align: center;"></div>
                 </section>
 
             </div>
@@ -132,12 +136,48 @@
                 <section class="box special">
                     <span class="image featured"><img src="images/foto_10.jpg" alt=""/></span>
                     <h3>Servizi e spazi comuni</h3>
-                    <p>IIl Residence è fornito di sauna, solarium UVA, taverna, zona deposito sci.<br/><br/>
+                    <p>IIl Residence è fornito di sauna, solarium UVA, taverna, zona deposito sci.<br/>
                         A pagamento è disponibile biancheria da bagno, da letto e il servizio di lavaggio biancheria
                         ogni mercoledì.</p>
                     <!--<ul class="actions special">-->
-                        <!--<li><a href="#" class="button alt">Learn More</a></li>-->
+                    <!--<li><a href="#" class="button alt">Learn More</a></li>-->
                     <!--</ul>-->
+                    <div id="lightgallery2" style="text-align: center;"></div>
+
+                </section>
+
+            </div>
+
+            <div class="col-6 col-12-narrower">
+
+                <section class="box special">
+                    <span class="image featured"><img src="images/foto_10.jpg" alt=""/></span>
+                    <h3>Taverna e sauna</h3>
+                    <!--<p>IIl Residence è fornito di sauna, solarium UVA, taverna, zona deposito sci.<br/><br/>-->
+                        <!--A pagamento è disponibile biancheria da bagno, da letto e il servizio di lavaggio biancheria-->
+                        <!--ogni mercoledì.</p>-->
+                    <!--<ul class="actions special">-->
+                    <!--<li><a href="#" class="button alt">Learn More</a></li>-->
+                    <!--</ul>-->
+                    <div id="lightgallery3" style="text-align: center;"></div>
+
+                </section>
+
+            </div>
+
+            <div class="col-6 col-12-narrower">
+
+                <section class="box special">
+                    <span class="image featured"><img src="images/foto_10.jpg" alt=""/></span>
+                    <h3>I dintorni</h3>
+                    <!--<p>IIl Residence è fornito di sauna, solarium UVA, taverna, zona deposito sci.<br/><br/>-->
+                    <!--A pagamento è disponibile biancheria da bagno, da letto e il servizio di lavaggio biancheria-->
+                    <!--ogni mercoledì.</p>-->
+                    <!--<ul class="actions special">-->
+                    <!--<li><a href="#" class="button alt">Learn More</a></li>-->
+                    <!--</ul>-->
+                    <div id="lightgallery4" style="text-align: center;"></div>
+
                 </section>
 
             </div>
@@ -165,6 +205,31 @@
     <!--</section>-->
 
     <!-- Footer -->
+
+    <script>
+        function Node(markup) {
+            var div = document.createElement('div');
+            div.innerHTML = markup;
+            return div.children[0];
+        }
+
+        function createLightGallery(name) {
+            var elementById = document.getElementById(name);
+            (new Array(4).fill(0).forEach(function (zero, index) {
+                var markup = '<a href="gallery/image' + (index + 1) + '.jpg"><img src="thumbnails/image' + (index + 1) + '.jpg" width="100px"></a>';
+                elementById.appendChild(Node(markup));
+            }));
+            lightGallery(elementById, {
+                thumbnail: true
+            });
+        }
+
+        createLightGallery('lightgallery1');
+        createLightGallery('lightgallery2');
+        createLightGallery('lightgallery3');
+        createLightGallery('lightgallery4');
+    </script>
+
     <footer id="footer">
         <ul class="icons">
             <!--<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->

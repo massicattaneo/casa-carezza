@@ -3843,7 +3843,8 @@ body.landing #main {
 
 }
 
-#lightgallery a img {
+#lightgallery a img, #lightgallery1 a img, #lightgallery2 a img, #lightgallery3 a img, #lightgallery4 a img {
     width: 100px;
-    height: 67px
+    height: 67px;
+    margin: 5px;
 }
