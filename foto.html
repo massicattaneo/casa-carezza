@@ -63,8 +63,8 @@
         }
 
         var elementById = document.getElementById('lightgallery');
-        (new Array(88).fill(0).forEach(function (zero, index) {
-            var markup = '<a href="gallery/image' + (index + 1) + '.jpg"><img src="thumbnails/image' + (index + 1) + '.jpg" width="100px"></a>';
+        (new Array(29).fill(0).forEach(function (zero, index) {
+            var markup = '<a href="gallery-home/foto/images/'+(index+1)+'.jpeg"><img src="gallery-home/foto/images/'+(index+1)+'.jpeg" width="100px"></a>';
             elementById.appendChild(Node(markup));
         }));
         lightGallery(elementById, {
