@@ -52,7 +52,7 @@
         <div class="box">
             <form method="post" action="#" name="modulo">
                 <div class="row gtr-50 gtr-uniform">
-                    <div class="col-6 col-12-mobilep">
+                    <div class="col-12 col-12-mobilep">
                         <label>ANNO:</label>
                         <select name="year" onchange="refreshYear()">
                             <option value="2020">2020</option>
@@ -68,9 +68,15 @@
                             <option value="2025">2030</option>
                         </select>
                     </div>
-                    <div class="col-6 col-12-mobilep">
+                    <div class="col-12 col-12-mobilep">
                         <label>PERIODO:</label>
                         <select name="period" onchange="refreshPeriod()">
+
+                        </select>
+                    </div>
+                    <div class="col-12 col-12-mobilep" onchange="refreshPeriod()">
+                        <label>SETTIMANA:</label>
+                        <select name="week">
 
                         </select>
                     </div>
@@ -129,6 +135,20 @@
             return periods;
         }
 
+        function getAllWeeks() {
+            return getPeriods().reduce(function (acc, item) {
+                return acc.concat(item.weeks).sort(function (a, b) {
+                    return a - b;
+                });
+            }, []);
+        }
+
+        function getAllPeriodWeeks() {
+            return {
+                number: -1, weeks: getAllWeeks()
+            };
+        }
+
         function refreshYear() {
             var period = document.modulo.period.value;
             var year = document.modulo.year.value;
@@ -137,24 +157,34 @@
             var last = new Date(firstSaturday.getTime() + ((52) * 7 * 24 * 60 * 60 * 1000));
             var number = last.getFullYear() === firstSaturday.getFullYear() ? 53 : 52;
             var periodElement = document.getElementsByName('period')[0];
-            (getPeriods().forEach(function (item) {
-                periodElement.appendChild(Node('<option value="' + (item.number) + '">' + (item.number) + '</option>'));
+            var weekElement = document.getElementsByName('week')[0];
+            ([{ number: -1, title: 'TUTTI' }].concat(getPeriods()).forEach(function (item) {
+                periodElement.appendChild(Node('<option value="' + (item.number) + '">' + (item.title || item.number) + '</option>'));
             }));
-            periodElement.value = period || '1';
+            [-1].concat(getAllWeeks()).forEach(function (week) {
+                weekElement.appendChild(Node('<option value="' + week + '">' + (week === -1 ? 'TUTTE' : week) + '</option>'));
+            });
+            periodElement.value = period || '-1';
             refreshPeriod();
         }
 
         function refreshPeriod() {
             var year = document.modulo.year.value;
             var period = document.modulo.period.value;
-            var periodItem = getPeriods(period);
+            var week = Number(document.modulo.week.value);
+            var periodItem = getPeriods(period) || getAllPeriodWeeks();
             var firstSaturday = getFirstSaturday(year);
             var result = document.getElementById('result');
-            var innerHTML = periodItem.weeks.map(function (week) {
-                var from = new Date(firstSaturday.getTime() + ((week - 1) * 7 * 24 * 60 * 60 * 1000));
-                var to = new Date(from.getTime() + 7 * 24 * 60 * 60 * 1000);
-                return 'ANNO ' + year + ' - SETTIMANA ' + week + ': <br/> <strong>Dal ' + from.toLocaleDateString() + ' al ' + to.toLocaleDateString() + '</strong>'
-            }).join('<hr/>');
+            var innerHTML = periodItem.weeks
+                .filter(function (w) {
+                    if (week === -1) return true;
+                    return week === w;
+                })
+                .map(function (week) {
+                    var from = new Date(firstSaturday.getTime() + ((week - 1) * 7 * 24 * 60 * 60 * 1000));
+                    var to = new Date(from.getTime() + 7 * 24 * 60 * 60 * 1000);
+                    return 'ANNO ' + year + ' - SETTIMANA ' + week + ': <br/> <strong>Dal ' + from.toLocaleDateString() + ' al ' + to.toLocaleDateString() + '</strong>';
+                }).join('<hr/>');
 
             result.innerHTML = innerHTML;
         }
