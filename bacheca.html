@@ -24,9 +24,8 @@
         <nav id="nav">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="prenota.html">Prenota</a></li>
+                <li><a href="bacheca.html">Bacheca</a></li>
                 <li><a href="foto.html">Foto</a></li>
-                <li><a href="cerca_periodo.html">Cerca periodo</a></li>
                 <li><a href="contattaci.html">Contattaci</a></li>
                 <li><a href="area_proprietari.html">Area Proprietari</a></li>
                 <li>
@@ -46,7 +45,7 @@
     <!-- Main -->
     <section id="main" class="container medium">
         <header>
-            <h2>Prenota</h2>
+            <h2>Bacheca</h2>
             <p>Le occasioni in evidenza!</p>
         </header>
         <form name="filter">
@@ -54,6 +53,7 @@
             <select name="type" id="filter_type" onchange="update()">
                 <option value="rent">AFFITTO</option>
                 <option value="exchange">SCAMBIO</option>
+                <option value="sell">VENDO</option>
             </select>
         </form>
         <div id="list"></div>

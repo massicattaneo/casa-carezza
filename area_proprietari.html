@@ -24,9 +24,8 @@
         <nav id="nav">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="prenota.html">Prenota</a></li>
+                <li><a href="bacheca.html">Bacheca</a></li>
                 <li><a href="foto.html">Foto</a></li>
-                <li><a href="cerca_periodo.html">Cerca periodo</a></li>
                 <li><a href="contattaci.html">Contattaci</a></li>
                 <li><a href="area_proprietari.html">Area Proprietari</a></li>
                 <li>
@@ -43,14 +42,60 @@
         </nav>
     </header>
 
+
+
     <!-- Main -->
     <section id="main" class="container medium">
         <header>
             <h2>Area Proprietari</h2>
+            <p>Cerca il tuo periodo:</p>
         </header>
+
+        <div class="box">
+            <p>Cerca il tuo periodo:</p>
+            <form method="post" action="#" name="modulo">
+                <div class="row gtr-50 gtr-uniform">
+                    <div class="col-12 col-12-mobilep">
+                        <label>ANNO:</label>
+                        <select name="year" onchange="refreshYear()">
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2025">2026</option>
+                            <option value="2025">2027</option>
+                            <option value="2025">2028</option>
+                            <option value="2025">2029</option>
+                            <option value="2025">2030</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-12-mobilep">
+                        <label>PERIODO:</label>
+                        <select name="period" onchange="refreshPeriod()">
+
+                        </select>
+                    </div>
+                    <div class="col-12 col-12-mobilep" onchange="refreshPeriod()">
+                        <label>SETTIMANA:</label>
+                        <select name="week">
+
+                        </select>
+                    </div>
+                    <div id="result-find" style="text-align: center; width: 100%;">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <hr/>
+
         <div class="box">
             <form name="login-in" style="display: none; text-align: center;">ENTRANDO NELLA TUA AREA PRIVATA</form>
             <form name="login-casa-carezza" style="display: none;">
+                <p>Entr</p>
                 <div class="row gtr-50 gtr-uniform">
 
                     <div class="col-6 col-12-mobilep">
@@ -141,6 +186,7 @@
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+<script src="assets/js/findPeriodWeek.js"></script>
 <script src="assets/js/init-firebase.js"></script>
 <script src="assets/js/database-utils.js"></script>
 <script src="assets/js/common-utils.js"></script>
@@ -183,15 +229,15 @@
     function showLoggedInfo(email) {
         getDatabase().then(function (db) {
             database = db;
-            var user = db.users.find(function (item) {
+            var user = database.users.find(function (item) {
                 return item.emails.indexOf(email) !== -1;
             });
-            var weeks = cloneObject(db.weeks);
+            var weeks = cloneObject(database.weeks);
 
             var toDraw = user.properties.reduce(function (acc, prop) {
                 var flat = prop.flat;
                 var periodNum = prop.period;
-                var period = db.periods.find(function (item) {
+                var period = database.periods.find(function (item) {
                     return item.number === periodNum;
                 });
                 const items = weeks.filter(function (item) {
